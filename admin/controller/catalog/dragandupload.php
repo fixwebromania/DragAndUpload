@@ -3,7 +3,7 @@ class ControllerCatalogDragAndUpload extends Controller
 {
 	public function index()
 	{ 
-		print 123; asd
+		var_dump($this->request->files);
 	} 
 }
 ?>

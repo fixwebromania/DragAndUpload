@@ -1,1 +1,105 @@
-asdsad  
+<modification>
+	<name>Drag and Upload</name>
+	<version>1.0</version>
+	<code>dragandupload</code>
+	<author>FixWeb - Toader Bogdan</author>
+	<file path="admin/view/template/catalog/product_form.twig">
+		<operation>
+			<search><![CDATA[
+				<li><a href="#tab-design" data-toggle="tab">{{ tab_design }}</a></li>
+				]]></search>
+			<add position="before"><![CDATA[
+				<li><a href="#tab-files" data-toggle="tab">Files</a></li>
+		]]></add>
+		</operation>		
+		<operation>
+			<search><![CDATA[
+				<div class="tab-pane" id="tab-design">
+				]]></search>
+			<add position="before"><![CDATA[
+				<style>
+					.progress 
+					{
+					  display: none;
+					}
+					.form-group
+					{
+						margin: 0px!important;
+					}
+					
+					.upload-drop-zone 
+					{
+					  height: 200px;
+					  border-width: 2px;
+					  margin-bottom: 20px;
+					}
+
+					.upload-drop-zone 
+					{
+					  color: #ccc;
+					  border-style: dashed;
+					  border-color: #ccc;
+					  line-height: 200px;
+					  text-align: center
+					}
+					.upload-drop-zone.drop 
+					{
+					  color: #222;
+					  border-color: #222;
+					}
+					.list-group-item
+					{
+					    margin-bottom: 9px;	
+					}
+				</style>
+				<script>
+				
+				var user_token='{{user_token}}'
+				</script>
+				<script src="view/javascript/dragandupload.js">
+				</script>
+				<div class="tab-pane" id="tab-files">
+					<div class="container">
+					  <div class="panel panel-default">
+						<div class="panel-heading"><strong>Upload Files</strong></div>
+						<div class="panel-body">
+
+						  
+
+						  <!-- Drop Zone -->
+						  <h4>Or drag and drop files below</h4>
+						  <div class="upload-drop-zone" id="drop-zone">
+							Just drag and drop files here
+						  </div>
+
+						  <!-- Progress Bar -->
+						  <div class="progress">
+							<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+							  <span class="sr-only">0% Complete</span>
+							</div>
+						  </div>
+
+						  <!-- Upload Finished -->
+						  <div class="js-upload-finished">
+							<h3>File List</h3>
+							<table class="table table-striped table-hover" >
+								<thead>
+								   <tr>
+									  <th>Filename</th>
+									  <th>Date</th>
+									  <th>Size</th>
+								   </tr>
+								</thead>
+								<tbody id='file-list'>
+								   
+								</tbody>
+							</table>
+						  </div>
+						</div>
+					  </div>
+					</div> <!-- /container -->
+				</div>
+		]]></add>
+		</operation>
+	</file>
+</modification>
