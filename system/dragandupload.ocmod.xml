@@ -3,6 +3,46 @@
 	<version>1.0</version>
 	<code>dragandupload</code>
 	<author>FixWeb - Toader Bogdan</author>
+	<file path="admin/controller/catalog/product.php">
+		<operation>
+			<search><![CDATA[
+				protected function getForm() {
+				]]></search>
+			<add position="after"><![CDATA[
+				$data['drag_language_id']=$this->config->get('config_language_id');
+		]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+				'name'        => $download_info['name']
+				]]></search>
+			<add position="before"><![CDATA[
+				'date'        => $download_info['date_added'],
+		]]></add>
+		</operation>
+	</file>
+	
+	<file path="admin/controller/catalog/download.php">
+		<operation>
+			<search><![CDATA[
+				$this->model_catalog_download->addDownload($this->request->post);
+				]]></search>
+			<add position="replace"><![CDATA[
+				$download_id=$this->model_catalog_download->addDownload($this->request->post);
+				
+				if(isset($this->request->get['ajax']))
+				{
+					$json=["success"=>true,"download_id"=>$download_id];
+					
+					header('Content-Type: application/json');
+					
+					print(json_encode($json));
+					
+					die();
+				}
+		]]></add>
+		</operation>
+	</file>
 	<file path="admin/view/template/catalog/product_form.twig">
 		<operation>
 			<search><![CDATA[
@@ -54,7 +94,9 @@
 				</style>
 				<script>
 				
-				var user_token='{{user_token}}'
+				var user_token='{{user_token}}';
+				
+				var drag_language_id='{{drag_language_id}}';
 				</script>
 				<script src="view/javascript/dragandupload.js">
 				</script>
@@ -87,11 +129,13 @@
 								   <tr>
 									  <th>Filename</th>
 									  <th>Date</th>
-									  <th>Size</th>
+									  <th></th>
 								   </tr>
 								</thead>
 								<tbody id='file-list'>
-								   
+								  {% for download in product_downloads %}
+									<tr class="paginate-show" id='du-{{download.download_id}}'><td><a href="#" target="_blank">{{download.name}}</a></td><td>{{download.date}}</td><td><a href='javascript:;' onclick='deleteDownload({{download.download_id}})'><i class='fa fa-close'></i></a></td></tr>
+								  {% endfor %}
 								</tbody>
 							</table>
 						  </div>
