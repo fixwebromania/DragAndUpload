@@ -65,6 +65,10 @@ function sendData(formdata){
 			{
 				addFile(response)
 			}
+			else
+			{
+				message("danger",response.error);
+			}
         }
     });
 }
@@ -92,6 +96,21 @@ function addFile(data)
 			html='<tr class="paginate-show" id="du-'+r.download_id+'"><td><a href="#" target="_blank">'+data.name+'</a></td><td></td><td><a href="javascript:;" onclick="deleteDownload('+r.download_id+')"><i class="fa fa-close"></i></a></td></tr>';
 					
 			$("#file-list").append(html);
+			
+			message("success","File has been uploaded successfully with following name: <b>"+data.name+"</b>");
 		}
 	})
+}
+
+function message(type,text)
+{
+	$(".alert").remove();
+	
+	var div=document.createElement("div");
+	
+		div.className="alert alert-"+type;
+		
+		div.innerHTML=text;
+		
+		$("#tab-files").find(".panel").prepend(div);
 }
